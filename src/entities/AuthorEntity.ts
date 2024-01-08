@@ -7,7 +7,11 @@ export class AuthorEntity {
     authorId: number;
 
     @Column({ nullable: false })
-    name: string;
+    firstName: string;
+
+
+    @Column({ nullable: false })
+    lastName: string;
 
     @Column({ nullable: false })
     country: string;

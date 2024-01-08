@@ -17,7 +17,7 @@ export class BookEntity {
 
     @OneToOne(() => AuthorEntity)
     @JoinColumn({ name: 'authorId' })
-    authorId: string;
+    authorId: number;
 
 
     @OneToOne(() => CategoryEntity)
