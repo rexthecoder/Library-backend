@@ -16,7 +16,5 @@ export class PublisherEntity {
   books: BookEntity[];
 
   // Add the following if you want to enforce a one-to-one relationship with BookEntity
-  @OneToOne(() => BookEntity)
-  @JoinColumn()
-  book: BookEntity;
+  
 }

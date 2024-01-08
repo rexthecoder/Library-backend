@@ -24,8 +24,10 @@ export class BookEntity {
     @JoinColumn()
     category: CategoryEntity;
 
-    @OneToOne(() => PublisherEntity)
-    @JoinColumn()
+    // @OneToOne(() => PublisherEntity)
+    // @JoinColumn()
+    // publisher: PublisherEntity;
+    @ManyToOne(() => PublisherEntity, (publisher) => publisher.books)
+    @JoinColumn({ name: 'publisherId' })
     publisher: PublisherEntity;
-
 }
