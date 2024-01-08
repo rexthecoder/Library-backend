@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeor
 export enum UserRole {
   ADMIN = 'admin',
   LIBRARIAN = 'librarian',
-  USER = 'user',
+  EDITOR = 'editor',
 }
 
 @Entity({ name: 'users' })
@@ -26,8 +26,8 @@ export class UserEntity {
   @Column({ nullable: true })
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
-  role: UserRole;
+  @Column({default: UserRole.EDITOR})
+  role: string;
 
   @Column({ nullable: true })
   isGeneratedPassword: boolean;
