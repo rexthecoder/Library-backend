@@ -1,6 +1,12 @@
-import { Entity, Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
-@Entity({ name: 'users'})
+export enum UserRole {
+  ADMIN = 'admin',
+  LIBRARIAN = 'librarian',
+  USER = 'user',
+}
+
+@Entity({ name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   userId: number;
@@ -14,19 +20,19 @@ export class UserEntity {
   @Column({ nullable: true })
   age: number;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   email: string;
 
   @Column({ nullable: true })
   password: string;
 
-  @Column({ default: 'student' })
-  role: string;
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+  role: UserRole;
 
   @Column({ nullable: true })
   isGeneratedPassword: boolean;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   level: string;
 
   @CreateDateColumn()
