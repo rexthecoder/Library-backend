@@ -13,6 +13,30 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+
+// login user
+export const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  try {
+    const userRepository = handleGetRepository(UserEntity);
+    const user = await userRepository.findOneBy({ email, password });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    return res.status(200).send({
+      message: 'User found',
+      data: {
+        userId: user.userId,
+        email: user.email,
+        fullName: `${user.firstName} ${user.lastName}`,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+}
+
 export const createUser = async (req: Request, res: Response) => {
   const { firstName, lastName, age, email, password, role, level } = req.body;
   try {
