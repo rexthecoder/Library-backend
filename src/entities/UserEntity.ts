@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, BeforeInsert } from 'typeorm';
+import { tokenHelper } from '../helper';
+import { compare, hash } from 'bcrypt';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -37,4 +39,25 @@ export class UserEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @BeforeInsert()
+  async hashPassword() {
+    console.log("hashpassowrd", this.password)
+    if (this.password) {
+      this.password = await hash(this.password, 10);
+    }
+  }
+  
+
+
+  generateToken(expiresIn = '1h') {
+    const data = { id: this.userId, email: this.email };
+    return tokenHelper.generateToken(data, expiresIn);
+  }
+
+  validatePassword(plainPassword: any) {
+    console.log(plainPassword)
+    console.log(this.password)
+    return compare(plainPassword, this.password);
+  }
 }
